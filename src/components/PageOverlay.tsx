@@ -1,7 +1,3 @@
-import { } from 'react';
-import { cn } from '@/lib/utils';
-import { siteConfig } from '@/config';
-
 interface PageOverlayProps {
   isVisible: boolean;
 }
@@ -9,26 +5,17 @@ interface PageOverlayProps {
 export function PageOverlay({ isVisible }: PageOverlayProps) {
   return (
     <div
-      className={cn(
-        'fixed inset-0 z-[9999] bg-white flex items-center justify-center transition-opacity duration-500 ease-out-cubic',
-        isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
-      )}
+      data-overlay
+      aria-hidden
+      className={
+        'fixed inset-0 z-[70] flex items-end bg-ink px-6 pb-10 transition-transform duration-700 ease-out-quart ' +
+        (isVisible ? 'translate-y-0' : 'pointer-events-none -translate-y-full')
+      }
     >
-      <div className="flex flex-col items-center gap-4">
-        <span className="text-2xl font-semibold tracking-tight text-exvia-black animate-pulse">
-          {siteConfig.title || 'Loading'}
-        </span>
-        <div className="w-24 h-0.5 bg-exvia-subtle rounded-full overflow-hidden">
-          <div className="h-full bg-exvia-black animate-[slide_1s_ease-in-out_infinite] w-1/3 rounded-full" />
-        </div>
+      <div className="flex w-full items-end justify-between font-mono text-[11px] uppercase tracking-[0.2em] text-paper/70">
+        <span>Anis Zamoum — Portfolio 2026</span>
+        <span>Tizi Ouzou</span>
       </div>
-
-      <style>{`
-        @keyframes slide {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(400%); }
-        }
-      `}</style>
     </div>
   );
 }

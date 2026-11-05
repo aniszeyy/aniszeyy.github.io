@@ -1,177 +1,138 @@
-import { useState, useEffect, type MouseEvent } from 'react';
-import { cn } from '@/lib/utils';
-import { AnimatedButton } from './AnimatedButton';
-import { navigationConfig } from '@/config';
+import { useEffect, useState } from 'react';
+import { navigationConfig, siteConfig } from '@/config';
 
 export function Navigation() {
-  if (!navigationConfig.logo && navigationConfig.links.length === 0) return null;
-
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    // Fade in navbar after page load
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 1800);
-
-    return () => clearTimeout(timer);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
     };
+  }, [open]);
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 1024px)');
+    const onResize = () => desktop.matches && setOpen(false);
+    const onKey = (event: KeyboardEvent) => event.key === 'Escape' && setOpen(false);
+    desktop.addEventListener('change', onResize);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      desktop.removeEventListener('change', onResize);
+      window.removeEventListener('keydown', onKey);
+    };
   }, []);
-
-  const handleNavClick = (e: MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMenuOpen(false);
-    }
-  };
 
   return (
     <>
-      <nav
-        className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out-circ',
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4',
-          isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm' : 'bg-transparent'
-        )}
+      <header
+        className={
+          'fixed inset-x-0 top-0 z-50 transition-colors duration-300 ' +
+          (scrolled || open ? 'border-b border-line bg-paper/90 backdrop-blur-md' : 'border-b border-transparent')
+        }
       >
-        <div className="w-full px-6 lg:px-12 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            {navigationConfig.logo && (
-              <a href="#" className="flex items-center">
-                <span className={cn(
-                  "text-2xl font-semibold tracking-tight transition-colors duration-500",
-                  isScrolled ? "text-exvia-black" : "text-white"
-                )}>
-                  {navigationConfig.logo}
-                </span>
-              </a>
-            )}
+        <div className="container-page flex h-[72px] items-center justify-between gap-6">
+          <a href="#top" className="group flex items-center gap-3" aria-label="Retour en haut">
+            <span className="flex h-9 w-9 items-center justify-center bg-ink font-mono text-[11px] tracking-widest text-paper transition-colors group-hover:bg-accent">
+              {navigationConfig.logo}
+            </span>
+            <span className="hidden text-sm font-medium sm:block">Anis Zamoum</span>
+          </a>
 
-            {/* Desktop Navigation */}
-            {navigationConfig.links.length > 0 && (
-              <div className="hidden lg:flex items-center gap-10">
-                {navigationConfig.links.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href)}
-                    className={cn(
-                      "text-base transition-colors duration-500 relative group",
-                      isScrolled ? "text-exvia-black/80 hover:text-exvia-black" : "text-white/90 hover:text-white"
-                    )}
-                  >
-                    {link.label}
-                    <span className={cn(
-                      "absolute -bottom-1 left-0 w-0 h-px transition-all duration-300 group-hover:w-full",
-                      isScrolled ? "bg-exvia-black" : "bg-white"
-                    )} />
-                  </a>
-                ))}
-              </div>
-            )}
-
-            {/* Contact Button */}
-            {navigationConfig.contactLabel && (
-              <div className="hidden lg:block">
-                <AnimatedButton
-                  href={navigationConfig.contactHref || "#contact"}
-                  variant={isScrolled ? "primary" : "outline-white"}
-                  size="md"
-                >
-                  {navigationConfig.contactLabel}
-                </AnimatedButton>
-              </div>
-            )}
-
-            {/* Mobile Menu Button */}
-            {navigationConfig.links.length > 0 && (
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="lg:hidden relative w-8 h-6 flex flex-col justify-between"
-                aria-label="Toggle menu"
-              >
-                <span
-                  className={cn(
-                    'w-full h-0.5 transition-all duration-500 ease-out-quad origin-center',
-                    isScrolled ? 'bg-exvia-black' : 'bg-white',
-                    isMenuOpen && 'translate-y-[10px] rotate-[-45deg]'
-                  )}
-                />
-                <span
-                  className={cn(
-                    'w-full h-0.5 transition-all duration-300 ease-out-quad',
-                    isScrolled ? 'bg-exvia-black' : 'bg-white',
-                    isMenuOpen && 'scale-0 opacity-0'
-                  )}
-                />
-                <span
-                  className={cn(
-                    'w-full h-0.5 transition-all duration-500 ease-out-quad origin-center',
-                    isScrolled ? 'bg-exvia-black' : 'bg-white',
-                    isMenuOpen && '-translate-y-[10px] rotate-[45deg]'
-                  )}
-                />
-              </button>
-            )}
-          </div>
-        </div>
-      </nav>
-
-      {/* Mobile Menu Overlay */}
-      {navigationConfig.links.length > 0 && (
-        <div
-          className={cn(
-            'fixed inset-0 z-40 bg-white transition-all duration-500 ease-out-cubic lg:hidden',
-            isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
-          )}
-        >
-          <div className="flex flex-col items-center justify-center h-full gap-8">
-            {navigationConfig.links.map((link, index) => (
+          <nav aria-label="Navigation principale" className="hidden items-center gap-8 lg:flex">
+            {navigationConfig.links.map((link) => (
               <a
-                key={link.label}
+                key={link.href}
                 href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className={cn(
-                  'text-3xl font-semibold text-exvia-black transition-all duration-500 ease-out-quart',
-                  isMenuOpen
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-8'
-                )}
-                style={{ transitionDelay: isMenuOpen ? `${index * 100}ms` : '0ms' }}
+                className="link-line font-mono text-[11px] uppercase tracking-[0.16em] text-ink-soft hover:text-ink"
               >
                 {link.label}
               </a>
             ))}
-            {navigationConfig.contactLabel && (
-              <AnimatedButton
-                href={navigationConfig.contactHref || "#contact"}
-                variant="primary"
-                size="lg"
-                className={cn(
-                  'mt-4 transition-all duration-500 ease-out-quart',
-                  isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                )}
-                style={{ transitionDelay: isMenuOpen ? '400ms' : '0ms' }}
-              >
-                {navigationConfig.contactLabel}
-              </AnimatedButton>
-            )}
+          </nav>
+
+          <div className="hidden items-center gap-5 lg:flex">
+            <a
+              href={siteConfig.github}
+              target="_blank"
+              rel="noreferrer"
+              className="link-line font-mono text-[11px] uppercase tracking-[0.16em] text-ink-soft hover:text-ink"
+            >
+              GitHub
+            </a>
+            <a href={navigationConfig.contactHref} className="btn btn-primary h-10 px-5">
+              {navigationConfig.contactLabel}
+            </a>
           </div>
+
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="flex h-11 w-11 items-center justify-center lg:hidden"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+          >
+            <span className="relative block h-3 w-6">
+              <span
+                className={
+                  'absolute left-0 top-0 h-px w-full bg-ink transition-transform duration-300 ' +
+                  (open ? 'translate-y-[5px] rotate-45' : '')
+                }
+              />
+              <span
+                className={
+                  'absolute bottom-0 left-0 h-px w-full bg-ink transition-transform duration-300 ' +
+                  (open ? '-translate-y-[6px] -rotate-45' : '')
+                }
+              />
+            </span>
+          </button>
         </div>
-      )}
+      </header>
+
+      <div
+        id="mobile-menu"
+        className={
+          'fixed inset-0 z-40 flex flex-col justify-between bg-paper px-6 pb-10 pt-28 transition-opacity duration-300 lg:hidden ' +
+          (open ? 'visible opacity-100' : 'invisible opacity-0')
+        }
+      >
+        <nav aria-label="Navigation mobile" className="flex flex-col">
+          {navigationConfig.links.map((link, i) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setOpen(false)}
+              className="flex items-baseline justify-between border-b border-line py-5 font-display text-4xl"
+            >
+              {link.label}
+              <span className="font-mono text-[11px] tracking-widest text-muted">0{i + 1}</span>
+            </a>
+          ))}
+        </nav>
+        <div className="space-y-4">
+          <a href={navigationConfig.contactHref} onClick={() => setOpen(false)} className="btn btn-primary w-full">
+            {navigationConfig.contactLabel}
+          </a>
+          <a
+            href={siteConfig.github}
+            target="_blank"
+            rel="noreferrer"
+            className="block text-center font-mono text-[11px] uppercase tracking-[0.16em] text-muted"
+          >
+            github.com/aniszeyy
+          </a>
+        </div>
+      </div>
     </>
   );
 }

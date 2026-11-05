@@ -1,339 +1,237 @@
-// Site configuration
-// Anis Zamoum - Multiplatform Developer Portfolio
+// Contenu du site — une seule source de vérité.
+// Les projets sont repris du compte GitHub @aniszeyy (dépôts publics, nov. 2026).
 
-export interface SiteConfig {
-  language: string;
-  title: string;
-  description: string;
-}
-
-export const siteConfig: SiteConfig = {
-  language: "en",
-  title: "Anis Zamoum | Multiplatform Developer",
-  description: "Multiplatform Developer from Tizi Ouzou, Algeria. Expert in Java, .NET, React, and System Administration.",
+export const siteConfig = {
+  language: 'fr',
+  title: 'Anis Zamoum — Développeur multiplateforme',
+  description:
+    "Portfolio d'Anis Zamoum, développeur multiplateforme à Tizi Ouzou : React et TypeScript, Java, .NET, bases de données et administration système.",
+  url: 'https://aniszeyy.github.io',
+  github: 'https://github.com/aniszeyy',
+  email: 'aniszamoumm@gmail.com',
+  location: 'Tizi Ouzou, Algérie',
 };
 
-// Navigation configuration
-export interface NavLink {
-  label: string;
-  href: string;
-}
-
-export interface NavigationConfig {
-  logo: string;
-  links: NavLink[];
-  contactLabel: string;
-  contactHref: string;
-}
-
-export const navigationConfig: NavigationConfig = {
-  logo: "Anis Zamoum",
+export const navigationConfig = {
+  logo: 'AZ',
   links: [
-    { label: "About", href: "#about" },
-    { label: "Services", href: "#services" },
-    { label: "Portfolio", href: "#portfolio" },
-    { label: "Testimonials", href: "#testimonials" },
+    { label: 'Travaux', href: '#work' },
+    { label: 'À propos', href: '#about' },
+    { label: 'Stack', href: '#stack' },
+    { label: 'Contact', href: '#contact' },
   ],
-  contactLabel: "Contact Me",
-  contactHref: "mailto:aniszamoumm@gmai.com",
+  contactLabel: 'Me contacter',
+  contactHref: 'mailto:aniszamoumm@gmail.com',
 };
 
-// Hero section configuration
-export interface HeroConfig {
+export const heroConfig = {
+  kicker: 'Portfolio — 2026',
+  name: ['Anis', 'Zamoum'],
+  role: 'Développeur multiplateforme',
+  intro:
+    "Je conçois des applications web, desktop et back-end — de l’interface React au schéma de base de données.",
+  availability: 'Disponible pour missions freelance',
+  meta: [
+    { label: 'Basé à', value: 'Tizi Ouzou, DZ' },
+    { label: 'Depuis', value: '2020' },
+    { label: 'Dépôts publics', value: '12' },
+  ],
+};
+
+export interface Project {
   name: string;
-  roles: string[];
-  backgroundImage: string;
-}
-
-export const heroConfig: HeroConfig = {
-  name: "Anis Zamoum",
-  roles: [
-    "Multiplatform Developer",
-    "System Administrator",
-    "Full-Stack Engineer",
-    "Database Expert",
-  ],
-  backgroundImage: "/images/hero-bg.jpg",
-};
-
-// About section configuration
-export interface AboutStat {
-  value: string;
-  label: string;
-}
-
-export interface AboutImage {
-  src: string;
-  alt: string;
-}
-
-export interface AboutConfig {
-  label: string;
-  description: string;
-  stats: AboutStat[];
-}
-
-export const aboutConfig: AboutConfig = {
-  label: "About Me",
-  description: "Multiplatform developer based in Tizi Ouzou, Algeria with expertise in both Java and .NET ecosystems. Passionate about system administration and creating robust cross-platform solutions. I specialize in building applications that work seamlessly across different platforms, with extensive experience in database management and server configuration. Currently expanding my knowledge in cloud computing and DevOps.",
-  stats: [
-    { value: "7+", label: "Programming Languages" },
-    { value: "4", label: "Database Systems" },
-    { value: "4", label: "Languages Spoken" },
-  ],
-};
-
-// Services section configuration
-export interface ServiceItem {
-  iconName: string;
-  title: string;
-  description: string;
-  image: string;
-}
-
-export interface ServicesConfig {
-  label: string;
-  heading: string;
-  services: ServiceItem[];
-}
-
-export const servicesConfig: ServicesConfig = {
-  label: "Services",
-  heading: "What I Can Do For You",
-  services: [
-    {
-      iconName: "Code",
-      title: "Full-Stack Development",
-      description: "Building complete web applications using React.js, Node.js/Express.js, J2EE, ASP.NET, and PHP. From frontend UI to backend APIs, I deliver end-to-end solutions.",
-      image: "/images/service-1.jpg",
-    },
-    {
-      iconName: "Database",
-      title: "Database Management",
-      description: "Expert in MS SQL, MySQL, MongoDB, and SQLite3. I design efficient database schemas, optimize queries, and ensure data integrity for your applications.",
-      image: "/images/service-2.jpg",
-    },
-    {
-      iconName: "Server",
-      title: "System Administration",
-      description: "Proficient in Arch Linux setup, Windows Server 2022 configuration, and VMware virtualization. I maintain and optimize server environments for peak performance.",
-      image: "/images/service-3.jpg",
-    },
-    {
-      iconName: "Monitor",
-      title: "Cross-Platform Apps",
-      description: "Developing applications using C#, Java, React.js that work seamlessly across different platforms. Create once, deploy everywhere with consistent user experience.",
-      image: "/images/service-4.jpg",
-    },
-  ],
-};
-
-// Portfolio section configuration
-export interface ProjectItem {
-  title: string;
-  category: string;
+  repo: string;
   year: string;
-  image: string;
+  category: 'Web' | 'Desktop' | 'Java';
+  summary: string;
+  stack: string[];
+  lang: string;
+  langColor: string;
+  motif: 'stripes' | 'grid' | 'rings' | 'bars' | 'dots';
   featured?: boolean;
 }
 
-export interface PortfolioCTA {
-  label: string;
-  heading: string;
-  linkText: string;
-  linkHref: string;
-}
-
-export interface PortfolioConfig {
-  label: string;
-  heading: string;
-  description: string;
-  projects: ProjectItem[];
-  cta: PortfolioCTA;
-  viewAllLabel: string;
-}
-
-export const portfolioConfig: PortfolioConfig = {
-  label: "Portfolio",
-  heading: "Featured Projects",
-  description: "A selection of my recent work showcasing expertise in cross-platform development, database management, and system administration.",
-  projects: [
-    {
-      title: "Cross-Platform Applications",
-      category: "Full-Stack Development",
-      year: "2024",
-      image: "/images/portfolio-1.jpg",
-      featured: true,
-    },
-    {
-      title: "Database Management Systems",
-      category: "Database Architecture",
-      year: "2024",
-      image: "/images/portfolio-2.jpg",
-    },
-    {
-      title: "Server Configuration",
-      category: "System Administration",
-      year: "2023",
-      image: "/images/portfolio-3.jpg",
-    },
-    {
-      title: "Java EE Enterprise Solutions",
-      category: "Backend Development",
-      year: "2023",
-      image: "/images/portfolio-4.jpg",
-    },
-    {
-      title: "Full-Stack Web Applications",
-      category: "Web Development",
-      year: "2024",
-      image: "/images/portfolio-5.jpg",
-    },
-  ],
-  cta: {
-    label: "Let's Work Together",
-    heading: "Have a project in mind?",
-    linkText: "Get in Touch",
-    linkHref: "mailto:aniszamoumm@gmai.com",
+export const projectsConfig: Project[] = [
+  {
+    name: 'Gaming Marketplace',
+    repo: 'gaming-marketplace',
+    year: '2026',
+    category: 'Web',
+    summary:
+      "Marketplace de comptes de jeux : catalogue filtrable, pagination et API REST (GET/POST) adossée à MySQL. Interface Next.js App Router avec shadcn/ui.",
+    stack: ['Next.js 15', 'TypeScript', 'MySQL', 'Tailwind'],
+    lang: 'TypeScript',
+    langColor: '#3178c6',
+    motif: 'rings',
+    featured: true,
   },
-  viewAllLabel: "View All Projects",
+  {
+    name: 'Gestion Produit',
+    repo: 'GESTION_Produit',
+    year: '2026',
+    category: 'Desktop',
+    summary:
+      "Application de bureau de gestion de produits et catégories : CRUD complet, DataGridView et accès ADO.NET déconnecté (DataSet + SqlCommandBuilder).",
+    stack: ['C# 9', '.NET 6', 'WinForms', 'SQL Server'],
+    lang: 'C# / .NET',
+    langColor: '#68217a',
+    motif: 'grid',
+  },
+  {
+    name: 'JobConnect Platform',
+    repo: 'JobConnect_Platform',
+    year: '2026',
+    category: 'Web',
+    summary:
+      'Mini-projet web en ASP.NET MVC : architecture Modèle-Vue-Contrôleur, vues Razor et interface responsive.',
+    stack: ['ASP.NET MVC', 'C#', 'Razor', 'Bootstrap'],
+    lang: 'C# / ASP.NET',
+    langColor: '#68217a',
+    motif: 'bars',
+  },
+  {
+    name: 'Quatre jeux Java',
+    repo: 'test-java-deploy',
+    year: '2026',
+    category: 'Java',
+    summary:
+      'Quatre mini-jeux pédagogiques — Labyrinthe, Snake, Tennis et Sudoku — avec boucles de jeu, dessin 2D et gestion des collisions.',
+    stack: ['Java', 'Swing', 'Timer', 'KeyListener'],
+    lang: 'Java',
+    langColor: '#b07219',
+    motif: 'dots',
+  },
+  {
+    name: 'Portfolio personnel',
+    repo: 'aniszeyy.github.io',
+    year: '2026',
+    category: 'Web',
+    summary:
+      "Ce site : grille éditoriale, filtres de projets, animations au scroll et contenu centralisé dans un fichier de configuration.",
+    stack: ['React 19', 'TypeScript', 'Vite', 'Tailwind'],
+    lang: 'TypeScript',
+    langColor: '#3178c6',
+    motif: 'stripes',
+  },
+];
+
+export interface ForkItem {
+  name: string;
+  repo: string;
+  year: string;
+  summary: string;
+  stack: string;
+}
+
+export const forksConfig: ForkItem[] = [
+  {
+    name: 'PFE Chirurgie',
+    repo: 'PFE_Chirurgie',
+    year: '2026',
+    summary: 'Gestion hospitalière : documents générés et accès patient par QR code.',
+    stack: 'Java · Jakarta EE · MySQL',
+  },
+  {
+    name: 'opencode',
+    repo: 'opencode',
+    year: '2026',
+    summary: 'Agent de code open source — fork du dépôt officiel.',
+    stack: 'TypeScript',
+  },
+  {
+    name: 'openclaw',
+    repo: 'openclaw',
+    year: '2026',
+    summary: 'Assistant IA personnel, multiplateforme — fork.',
+    stack: 'TypeScript',
+  },
+  {
+    name: 'system_prompts_leaks',
+    repo: 'system_prompts_leaks',
+    year: '2026',
+    summary: 'Collection de prompts système de chatbots — fork.',
+    stack: 'Markdown',
+  },
+  {
+    name: 'AutoEcole',
+    repo: 'AutoEcole',
+    year: '2017',
+    summary: "Projet web étudiant (3IL) : élèves, véhicules, leçons et examens.",
+    stack: 'PHP · Oracle XE',
+  },
+];
+
+export const aboutConfig = {
+  lead: 'Développeur multiplateforme basé à Tizi Ouzou, en Algérie.',
+  paragraphs: [
+    "Je travaille des deux côtés de la stack : React et TypeScript pour les interfaces, Java et .NET pour le back-end et le desktop. Mon terrain de jeu : les applications qui doivent tourner partout, sans perdre en rigueur.",
+    "J’aime les systèmes qui tiennent : un schéma de données propre, un serveur bien configuré (Arch Linux, Windows Server), une interface qui se lit sans mode d’emploi. Je développe aussi en freelance et je cherche des collaborations open source autour de Java et .NET.",
+  ],
+  facts: [
+    { label: 'Localisation', value: 'Tizi Ouzou, Algérie' },
+    { label: 'Statut', value: 'Freelance — disponible' },
+    { label: 'Langues', value: 'Arabe, kabyle, français, anglais' },
+    { label: 'Focus', value: 'Web · Desktop · Données · Systèmes' },
+  ],
 };
 
-// Testimonials section configuration
-export interface TestimonialItem {
-  quote: string;
-  author: string;
-  role: string;
-  company: string;
-  image: string;
-  rating: number;
-}
-
-export interface TestimonialsConfig {
-  label: string;
-  heading: string;
-  testimonials: TestimonialItem[];
-}
-
-export const testimonialsConfig: TestimonialsConfig = {
-  label: "Testimonials",
-  heading: "What Clients Say",
-  testimonials: [
+export const stackConfig = {
+  groups: [
     {
-      quote: "Anis delivered an exceptional cross-platform solution that exceeded our expectations. His expertise in both Java and .NET ecosystems was evident throughout the project.",
-      author: "Sarah Mitchell",
-      role: "CTO",
-      company: "TechVentures Inc.",
-      image: "/images/testimonial-1.jpg",
-      rating: 5,
+      title: 'Interfaces',
+      items: ['React 19', 'TypeScript', 'JavaScript', 'Tailwind CSS', 'shadcn/ui', 'HTML5 / CSS3'],
     },
     {
-      quote: "Working with Anis was a pleasure. His system administration skills helped us optimize our server infrastructure significantly. Highly recommended!",
-      author: "Michael Chen",
-      role: "IT Director",
-      company: "DataFlow Systems",
-      image: "/images/testimonial-2.jpg",
-      rating: 5,
+      title: 'Back-end',
+      items: ['Node.js', 'Express', 'J2EE · Servlet / JSP', 'ASP.NET MVC', 'PHP'],
     },
     {
-      quote: "The database architecture Anis designed for our application was robust and scalable. His attention to detail and technical knowledge are impressive.",
-      author: "Amanda Rodriguez",
-      role: "Product Manager",
-      company: "CloudScale Solutions",
-      image: "/images/testimonial-3.jpg",
-      rating: 5,
+      title: 'Desktop',
+      items: ['C# / .NET', 'Windows Forms', 'Java Swing'],
+    },
+    {
+      title: 'Données',
+      items: ['SQL Server', 'MySQL', 'MongoDB', 'SQLite', 'Oracle'],
+    },
+    {
+      title: 'Systèmes',
+      items: ['Arch Linux', 'Windows Server 2022', 'VMware', 'Tomcat', 'XAMPP'],
+    },
+    {
+      title: 'Outils',
+      items: ['Git / GitHub', 'Figma', 'VS Code', 'Visual Studio'],
     },
   ],
 };
 
-// CTA section configuration
-export interface CTAConfig {
-  tags: string[];
-  heading: string;
-  description: string;
-  buttonText: string;
-  buttonHref: string;
-  email: string;
-  backgroundImage: string;
-}
-
-export const ctaConfig: CTAConfig = {
-  tags: ["Multiplatform Developer", "System Administrator", "Database Expert"],
-  heading: "Let's Build Something Amazing Together",
-  description: "Looking to collaborate on open-source Java and .NET projects. Currently working on cross-platform applications and expanding knowledge in cloud computing and DevOps.",
-  buttonText: "Start a Project",
-  buttonHref: "mailto:aniszamoumm@gmai.com",
-  email: "aniszamoumm@gmai.com",
-  backgroundImage: "/images/cta-bg.jpg",
+export const contactConfig = {
+  heading: 'Parlons de votre prochain projet.',
+  text: "Une application à construire, une base de données à remettre d’aplomb ou une mission freelance ? Écrivez-moi — je réponds vite.",
+  availability: 'Ouvert aux missions freelance et aux collaborations open source.',
 };
 
-// Footer section configuration
-export interface FooterLinkColumn {
-  title: string;
-  links: { label: string; href: string }[];
-}
-
-export interface SocialLink {
-  iconName: string;
-  href: string;
-  label: string;
-}
-
-export interface FooterConfig {
-  logo: string;
-  description: string;
-  columns: FooterLinkColumn[];
-  socialLinks: SocialLink[];
-  newsletterHeading: string;
-  newsletterDescription: string;
-  newsletterButtonText: string;
-  newsletterPlaceholder: string;
-  copyright: string;
-  credit: string;
-}
-
-export const footerConfig: FooterConfig = {
-  logo: "Anis Zamoum",
-  description: "Multiplatform Developer from Tizi Ouzou, Algeria. Creating robust cross-platform solutions with expertise in Java, .NET, React, and System Administration.",
+export const footerConfig = {
+  description:
+    "Développeur multiplateforme à Tizi Ouzou. Web, desktop, données et systèmes — avec le souci du détail.",
   columns: [
     {
-      title: "Navigation",
+      title: 'Navigation',
       links: [
-        { label: "About", href: "#about" },
-        { label: "Services", href: "#services" },
-        { label: "Portfolio", href: "#portfolio" },
-        { label: "Testimonials", href: "#testimonials" },
+        { label: 'Travaux', href: '#work' },
+        { label: 'À propos', href: '#about' },
+        { label: 'Stack', href: '#stack' },
+        { label: 'Contact', href: '#contact' },
       ],
     },
     {
-      title: "Services",
+      title: 'Ailleurs',
       links: [
-        { label: "Full-Stack Development", href: "#services" },
-        { label: "Database Management", href: "#services" },
-        { label: "System Administration", href: "#services" },
-        { label: "Cross-Platform Apps", href: "#services" },
-      ],
-    },
-    {
-      title: "Technologies",
-      links: [
-        { label: "React.js & Node.js", href: "#" },
-        { label: "Java & J2EE", href: "#" },
-        { label: "C# & ASP.NET", href: "#" },
-        { label: "SQL & NoSQL", href: "#" },
+        { label: 'GitHub', href: 'https://github.com/aniszeyy' },
+        { label: 'Tous les dépôts', href: 'https://github.com/aniszeyy?tab=repositories' },
+        { label: 'Email', href: 'mailto:aniszamoumm@gmail.com' },
       ],
     },
   ],
-  socialLinks: [
-    { iconName: "Github", href: "https://github.com/aniszeyy", label: "GitHub" },
-    { iconName: "Linkedin", href: "#", label: "LinkedIn" },
-    { iconName: "Twitter", href: "#", label: "Twitter" },
-    { iconName: "Mail", href: "mailto:aniszamoumm@gmai.com", label: "Email" },
-  ],
-  newsletterHeading: "Stay Updated",
-  newsletterDescription: "Subscribe to get the latest updates on my projects and tech insights.",
-  newsletterButtonText: "Subscribe",
-  newsletterPlaceholder: "Enter your email",
-  copyright: "© 2024 Anis Zamoum. All rights reserved.",
-  credit: "Built with React & Tailwind CSS",
+  copyright: '© 2026 Anis Zamoum',
+  credit: 'Conçu et codé à Tizi Ouzou.',
 };
